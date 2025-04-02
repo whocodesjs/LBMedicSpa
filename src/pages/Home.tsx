@@ -1,13 +1,16 @@
 import React, { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { motion, useInView, animate, useMotionValue } from "framer-motion";
+import { ArrowRightIcon, PlayIcon } from "@heroicons/react/24/outline";
 import {
-  CalendarIcon,
-  ClockIcon,
-  HeartIcon,
-  ArrowRightIcon,
-  PlayIcon,
-} from "@heroicons/react/24/outline";
+  LaserIcon,
+  MicroneedlingIcon,
+  ChemicalPeelIcon,
+  NeurotoxinInjectionIcon,
+  IVVitaminIcon,
+  HairLossTreatmentIcon,
+  ConsultationIcon,
+} from "../components/icons";
 
 const stats = [
   { label: "Active Patients", value: 2000, suffix: "+" },
@@ -17,19 +20,40 @@ const stats = [
 
 const services = [
   {
-    name: "Massage Therapy",
-    description: "Expert therapeutic massage for relaxation and healing",
-    icon: HeartIcon,
+    name: "Laser Hair Removal",
+    description: "Expert laser hair removal for all skin types",
+    icon: LaserIcon,
   },
   {
-    name: "Facial Treatments",
-    description: "Rejuvenating skincare and facial therapies",
-    icon: CalendarIcon,
+    name: "Microneedling",
+    description: "Microneedling for skin rejuvenation and collagen production",
+    icon: MicroneedlingIcon,
   },
   {
-    name: "Body Treatments",
-    description: "Comprehensive wellness treatments for your body",
-    icon: ClockIcon,
+    name: "Chemical Peels",
+    description: "Chemical peels for skin rejuvenation and exfoliation",
+    icon: ChemicalPeelIcon,
+  },
+  {
+    name: "Neurotoxin Injections",
+    description:
+      "Neurotoxin injections for wrinkle reduction and skin rejuvenation",
+    icon: NeurotoxinInjectionIcon,
+  },
+  {
+    name: "IV Vitamin Therapy",
+    description: "IV vitamin therapy for overall health and wellness",
+    icon: IVVitaminIcon,
+  },
+  {
+    name: "Hair Loss Treatment with PRP/PRF",
+    description: "Hair loss treatment with PRP/PRF for men and women",
+    icon: HairLossTreatmentIcon,
+  },
+  {
+    name: "Consultation",
+    description: "Consultation for all services",
+    icon: ConsultationIcon,
   },
 ];
 
