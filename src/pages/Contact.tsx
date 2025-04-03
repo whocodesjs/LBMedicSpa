@@ -78,7 +78,7 @@ const Contact = () => {
                   <div className="flex items-start gap-8">
                     <div className="flex-shrink-0">
                       <img
-                        src="public/assets/BUilding better business-25.jpg"
+                        src="/assets/BUilding better business-25.jpg"
                         alt="Dr. Summer Graham"
                         className="w-48 h-48 rounded-full object-cover border-4 border-primary-100 shadow-lg"
                       />
