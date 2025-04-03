@@ -21,7 +21,7 @@ const services: Service[] = [
   {
     title: "Laser Hair Removal",
     description: "Laser hair removal for all skin types",
-    image: "src/assets/ani-kolleshi-vu-DaZVeny0-unsplash.jpg",
+    image: "/assets/ani-kolleshi-vu-DaZVeny0-unsplash.jpg",
     price: "$80",
     duration: "60 minutes",
     badge: "Popular",
@@ -35,7 +35,7 @@ const services: Service[] = [
   {
     title: "Microneedling",
     description: "Microneedling for skin rejuvenation and collagen production",
-    image: "/services/facial.jpg",
+    image: "/assets/facial.jpg",
     price: "$120",
     duration: "90 minutes",
     badge: "Premium",
@@ -49,7 +49,7 @@ const services: Service[] = [
   {
     title: "Chemical Peel",
     description: "Chemical peel for skin rejuvenation and exfoliation",
-    image: "/services/scrub.jpg",
+    image: "/assets/scrub.jpg",
     price: "$100",
     duration: "75 minutes",
     badge: "Essential",
@@ -64,7 +64,7 @@ const services: Service[] = [
     title: "Neurotoxin Injection",
     description:
       "Neurotoxin injections for wrinkle reduction and skin rejuvenation",
-    image: "/services/aromatherapy.jpg",
+    image: "/assets/aromatherapy.jpg",
     price: "$90",
     duration: "60 minutes",
     badge: "Popular",
@@ -78,7 +78,7 @@ const services: Service[] = [
   {
     title: "IV Vitamin Therapy",
     description: "IV vitamin therapy for overall health and wellness",
-    image: "/services/hot-stone.jpg",
+    image: "/assets/hot-stone.jpg",
     price: "$130",
     duration: "90 minutes",
     badge: "Specialty",
@@ -92,7 +92,7 @@ const services: Service[] = [
   {
     title: "Hair Loss Treatment with PRP/PRF",
     description: "Hair loss treatment with PRP/PRF for men and women",
-    image: "/services/consultation.jpg",
+    image: "/assets/consultation.jpg",
     price: "$60",
     duration: "45 minutes",
     badge: "Essential",
