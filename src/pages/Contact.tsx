@@ -75,18 +75,29 @@ const Contact = () => {
               viewport={{ once: true }}>
               <div className="sticky top-8">
                 <div className="mb-12">
-                  <h2 className="text-2xl font-semibold mb-4">
-                    Hi, I'm Dr. Summer Graham!
-                  </h2>
-                  <p className="text-lg text-neutral-600">
-                    "I'm here to guide you through your wellness journey and
-                    help you achieve your health and relaxation goals."
-                  </p>
-                  <a
-                    href="mailto:sarah@medicspa.com"
-                    className="inline-block mt-6 text-primary-600 hover:text-primary-700 font-medium">
-                    Email Dr. Graham directly →
-                  </a>
+                  <div className="flex items-start gap-8">
+                    <div className="flex-shrink-0">
+                      <img
+                        src="https://www.dropbox.com/scl/fi/tf3n1elg1uswldm8ty616/Photo-Mar-30-2025-1-46-55-PM-2.jpg?rlkey=w6t49msui5spqkjzaddg0lfwb&st=xiy14270&dl=0"
+                        alt="Dr. Summer Graham"
+                        className="w-48 h-48 rounded-full object-cover border-4 border-primary-100 shadow-lg"
+                      />
+                    </div>
+                    <div>
+                      <h2 className="text-2xl font-semibold mb-4">
+                        Hi, I'm Dr. Summer Graham!
+                      </h2>
+                      <p className="text-lg text-neutral-600">
+                        "I'm here to guide you through your wellness journey and
+                        help you achieve your health and relaxation goals."
+                      </p>
+                      <a
+                        href="mailto:sarah@medicspa.com"
+                        className="inline-block mt-6 text-primary-600 hover:text-primary-700 font-medium">
+                        Email Dr. Graham directly →
+                      </a>
+                    </div>
+                  </div>
                 </div>
 
                 <div className="rounded-2xl bg-neutral-50 p-8">
