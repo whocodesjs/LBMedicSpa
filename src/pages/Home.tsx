@@ -252,13 +252,11 @@ export default function Home() {
             transition={{ duration: 0.8, type: "spring", stiffness: 100 }}
             className="max-w-3xl">
             <h1 className="text-[64px] font-medium leading-tight mb-8 tracking-tight">
-              Unwrap your path to wellness and rejuvenation
+              LB Medica Spa & Wellness Centre
             </h1>
             <p className="text-xl text-neutral-600 mb-12 max-w-2xl leading-relaxed">
-              Our team of expert practitioners has a passion for holistic
-              wellness. For over 15 years, we've been helping people achieve
-              their wellness goals through personalized care and innovative
-              treatments.
+              At LB MedicSpa & Wellness Centre, we are dedicated to providing
+              personalized care that nurtures both your body and mind.
             </p>
             <div className="flex items-center gap-6">
               <Link
@@ -289,8 +287,8 @@ export default function Home() {
               Our Services
             </h2>
             <p className="text-xl text-neutral-600 leading-relaxed">
-              Experience our range of wellness treatments designed to enhance
-              your well-being
+              We offer expert treatments designed to help you look and feel your
+              best, with a focus on your overall wellness.
             </p>
           </motion.div>
 
@@ -328,7 +326,19 @@ export default function Home() {
           </div>
         </div>
       </div>
-
+      {/* About Section */}
+      <div className="py-32 bg-white">
+        <div className="mx-auto max-w-7xl px-6">
+          <h2 className="text-3xl font-medium mb-6 tracking-tight">
+            Our range of services combines advanced medical aesthetics with
+            holistic wellness approaches, ensuring you receive the highest
+            standard of care in a tranquil and supportive environment. Whether
+            you're seeking rejuvenation, relaxation, or a healthier lifestyle,
+            we are here to guide you on your journey to enhanced beauty and
+            well-being. Welcome to a new you—where science meets self-care.
+          </h2>
+        </div>
+      </div>
       {/* Stats Section */}
       <div className="py-32 bg-whitesmoke">
         <div className="mx-auto max-w-7xl px-6">
@@ -412,7 +422,7 @@ export default function Home() {
             transition={{ duration: 0.8, type: "spring", stiffness: 100 }}
             className="text-center">
             <h2 className="text-[56px] font-medium mb-8 tracking-tight">
-              Start your wellness journey today
+              Because You Deserve to Feel Amazing—Every Day.
             </h2>
             <p className="text-xl text-neutral-600 max-w-2xl mx-auto mb-12 leading-relaxed">
               Book your appointment and take the first step towards a healthier,

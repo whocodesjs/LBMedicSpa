@@ -15,9 +15,13 @@ const menuItems: MenuItem[] = [
     label: "Services",
     path: "/services",
     subItems: [
-      { label: "Massage Therapy", path: "/services" },
-      { label: "Facial Treatments", path: "/services" },
-      { label: "Body Treatments", path: "/services" },
+      { label: "Laser Hair Removal", path: "/services" },
+      { label: "Microneedling", path: "/services" },
+      { label: "Chemical Peels", path: "/services" },
+      { label: "Neurotoxin Injections (Botox/Dysport)", path: "/services" },
+      { label: "IV Vitamin Therapy", path: "/services" },
+      { label: "Hair Restoration with PRP/PRF", path: "/services" },
+      { label: "One on One Consultation", path: "/services" },
     ],
   },
   {

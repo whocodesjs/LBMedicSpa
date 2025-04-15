@@ -1,64 +1,30 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import { motion } from "framer-motion";
-import { CalendarIcon, ClockIcon } from "@heroicons/react/24/outline";
-
-const services = [
-  { value: "massage", label: "Massage Therapy" },
-  { value: "facial", label: "Facial Treatment" },
-  { value: "scrub", label: "Body Scrub" },
-  { value: "aromatherapy", label: "Aromatherapy" },
-  { value: "hot-stone", label: "Hot Stone Therapy" },
-  { value: "consultation", label: "Wellness Consultation" },
-];
-
-const timeSlots = [
-  "09:00 AM",
-  "10:00 AM",
-  "11:00 AM",
-  "12:00 PM",
-  "02:00 PM",
-  "03:00 PM",
-  "04:00 PM",
-  "05:00 PM",
-];
+import { CalendarIcon } from "@heroicons/react/24/outline";
 
 const BookAppointment = () => {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    service: "",
-    date: "",
-    time: "",
-    notes: "",
-  });
+  useEffect(() => {
+    // Load Calendly widget script
+    const script = document.createElement("script");
+    script.src = "https://assets.calendly.com/assets/external/widget.js";
+    script.async = true;
+    document.body.appendChild(script);
 
-  const handleChange = (
-    e: React.ChangeEvent<
-      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
-    >
-  ) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log("Form submitted:", formData);
-  };
+    return () => {
+      // Cleanup script on component unmount
+      document.body.removeChild(script);
+    };
+  }, []);
 
   return (
-    <div className="min-h-screen bg-whitesmoke pt-32 pb-16">
+    <div className="min-h-screen bg-whitesmoke pt-24 pb-16">
       <div className="mx-auto max-w-7xl px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="text-center mb-16">
-          <h1 className="text-[64px] font-medium leading-tight mb-6">
+          className="text-center mb-12">
+          <h1 className="text-[64px] font-medium leading-tight mb-4">
             Book your wellness journey
           </h1>
           <p className="text-xl text-neutral-600 max-w-2xl mx-auto">
@@ -67,45 +33,62 @@ const BookAppointment = () => {
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="space-y-12">
+            className="space-y-10">
             <div>
-              <h2 className="text-2xl font-medium mb-6">Available Hours</h2>
-              <div className="space-y-4 text-neutral-600">
+              <h2 className="text-2xl font-medium mb-4">Available Hours</h2>
+              <div className="space-y-3 text-neutral-600">
                 <div className="flex items-center gap-3">
                   <CalendarIcon className="h-5 w-5" />
-                  <span>Monday - Friday: 9:00 AM - 6:00 PM</span>
+                  <span>Monday - Friday: 4:30 PM - 6:30 PM</span>
                 </div>
                 <div className="flex items-center gap-3">
                   <CalendarIcon className="h-5 w-5" />
-                  <span>Saturday: 10:00 AM - 4:00 PM</span>
+                  <span>Saturday & Sunday: 11:00 AM - 5:00 PM</span>
+                </div>
+              </div>
+            </div>
+            <div>
+              <h2 className="text-2xl font-medium mb-4">Consultation Hours</h2>
+              <div className="space-y-3 text-neutral-600">
+                <div className="flex items-center gap-3">
+                  <CalendarIcon className="h-5 w-5" />
+                  <span>Monday - Friday: 4:30 PM - 7:00 PM</span>
                 </div>
                 <div className="flex items-center gap-3">
                   <CalendarIcon className="h-5 w-5" />
-                  <span>Sunday: Closed</span>
+                  <span>Saturday: 11:00 AM - 4:00 PM</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <CalendarIcon className="h-5 w-5" />
+                  <span>Sunday: 12:00 PM - 4:00 PM</span>
                 </div>
               </div>
             </div>
 
             <div>
-              <h2 className="text-2xl font-medium mb-6">Location</h2>
+              <h2 className="text-2xl font-medium mb-4">Location</h2>
               <p className="text-neutral-600">
-                123 Wellness Street
+                AVIV Dental & Aesthetics
                 <br />
-                San Francisco, CA 94105
+                2-6 South Avenue Road
+                <br />
+                Shop #6, Lane Plaza
+                <br />
+                Kingston, Jamaica
               </p>
             </div>
 
             <div>
-              <h2 className="text-2xl font-medium mb-6">Contact</h2>
+              <h2 className="text-2xl font-medium mb-4">Contact</h2>
               <p className="text-neutral-600">
                 Email: hello@medicspa.com
                 <br />
-                Phone: (555) 123-4567
+                Phone: (876) 822-5525
               </p>
             </div>
           </motion.div>
@@ -113,146 +96,17 @@ const BookAppointment = () => {
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}>
-            <form onSubmit={handleSubmit} className="space-y-8">
-              <div className="space-y-6">
-                <div>
-                  <label
-                    htmlFor="name"
-                    className="block text-sm font-medium text-neutral-900 mb-2">
-                    Full Name
-                  </label>
-                  <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    className="w-full px-4 py-3 rounded-lg border border-neutral-200 focus:outline-none focus:ring-2 focus:ring-neutral-900 focus:border-transparent transition-colors"
-                    required
-                  />
-                </div>
-
-                <div>
-                  <label
-                    htmlFor="email"
-                    className="block text-sm font-medium text-neutral-900 mb-2">
-                    Email Address
-                  </label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    className="w-full px-4 py-3 rounded-lg border border-neutral-200 focus:outline-none focus:ring-2 focus:ring-neutral-900 focus:border-transparent transition-colors"
-                    required
-                  />
-                </div>
-
-                <div>
-                  <label
-                    htmlFor="phone"
-                    className="block text-sm font-medium text-neutral-900 mb-2">
-                    Phone Number
-                  </label>
-                  <input
-                    type="tel"
-                    id="phone"
-                    name="phone"
-                    value={formData.phone}
-                    onChange={handleChange}
-                    className="w-full px-4 py-3 rounded-lg border border-neutral-200 focus:outline-none focus:ring-2 focus:ring-neutral-900 focus:border-transparent transition-colors"
-                    required
-                  />
-                </div>
-
-                <div>
-                  <label
-                    htmlFor="service"
-                    className="block text-sm font-medium text-neutral-900 mb-2">
-                    Select Service
-                  </label>
-                  <select
-                    id="service"
-                    name="service"
-                    value={formData.service}
-                    onChange={handleChange}
-                    className="w-full px-4 py-3 rounded-lg border border-neutral-200 focus:outline-none focus:ring-2 focus:ring-neutral-900 focus:border-transparent transition-colors"
-                    required>
-                    <option value="">Choose a service</option>
-                    {services.map((service) => (
-                      <option key={service.value} value={service.value}>
-                        {service.label}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <label
-                      htmlFor="date"
-                      className="block text-sm font-medium text-neutral-900 mb-2">
-                      Preferred Date
-                    </label>
-                    <input
-                      type="date"
-                      id="date"
-                      name="date"
-                      value={formData.date}
-                      onChange={handleChange}
-                      className="w-full px-4 py-3 rounded-lg border border-neutral-200 focus:outline-none focus:ring-2 focus:ring-neutral-900 focus:border-transparent transition-colors"
-                      required
-                    />
-                  </div>
-
-                  <div>
-                    <label
-                      htmlFor="time"
-                      className="block text-sm font-medium text-neutral-900 mb-2">
-                      Preferred Time
-                    </label>
-                    <select
-                      id="time"
-                      name="time"
-                      value={formData.time}
-                      onChange={handleChange}
-                      className="w-full px-4 py-3 rounded-lg border border-neutral-200 focus:outline-none focus:ring-2 focus:ring-neutral-900 focus:border-transparent transition-colors"
-                      required>
-                      <option value="">Select time</option>
-                      {timeSlots.map((time) => (
-                        <option key={time} value={time}>
-                          {time}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                </div>
-
-                <div>
-                  <label
-                    htmlFor="notes"
-                    className="block text-sm font-medium text-neutral-900 mb-2">
-                    Additional Notes
-                  </label>
-                  <textarea
-                    id="notes"
-                    name="notes"
-                    value={formData.notes}
-                    onChange={handleChange}
-                    rows={4}
-                    className="w-full px-4 py-3 rounded-lg border border-neutral-200 focus:outline-none focus:ring-2 focus:ring-neutral-900 focus:border-transparent transition-colors"
-                  />
-                </div>
-              </div>
-
-              <button
-                type="submit"
-                className="w-full bg-neutral-900 text-white py-4 px-6 rounded-full text-base font-medium hover:bg-neutral-800 transition-colors">
-                Book Appointment
-              </button>
-            </form>
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="bg-white rounded-2xl shadow-sm p-1">
+            <div
+              className="calendly-inline-widget"
+              data-url="https://calendly.com/whocodesjs/30min?hide_event_type_details=1&hide_gdpr_banner=1&background_color=f8f8f8&text_color=1a1a1a&primary_color=1a1a1a"
+              style={{
+                minWidth: "320px",
+                height: "650px",
+                borderRadius: "1rem",
+              }}
+            />
           </motion.div>
         </div>
       </div>

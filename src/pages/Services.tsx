@@ -20,8 +20,9 @@ interface Service {
 const services: Service[] = [
   {
     title: "Laser Hair Removal",
-    description: "Laser hair removal for all skin types",
-    image: "/assets/ani-kolleshi-vu-DaZVeny0-unsplash.jpg",
+    description:
+      "Smooth, hair-free skin is just a few sessions away. Safe, effective, and virtually painless—our laser technology targets unwanted hair with precision, for lasting results.",
+    image: "/assets/image.jpg",
     price: "$80",
     duration: "60 minutes",
     badge: "Popular",
@@ -34,8 +35,9 @@ const services: Service[] = [
   },
   {
     title: "Microneedling",
-    description: "Microneedling for skin rejuvenation and collagen production",
-    image: "/assets/facial.jpg",
+    description:
+      "Stimulate collagen, refine texture, and restore your skin’s youthful radiance. Perfect for reducing scars, fine lines, and enlarged pores.",
+    image: "/assets/microneedling.jpg",
     price: "$120",
     duration: "90 minutes",
     badge: "Premium",
@@ -48,8 +50,9 @@ const services: Service[] = [
   },
   {
     title: "Chemical Peel",
-    description: "Chemical peel for skin rejuvenation and exfoliation",
-    image: "/assets/scrub.jpg",
+    description:
+      "Reveal fresh, glowing skin with our customized peels. Whether you're battling acne, pigmentation, or dullness, we have the right peel for your skin type and goals",
+    image: "/assets/peel.jpg",
     price: "$100",
     duration: "75 minutes",
     badge: "Essential",
@@ -63,8 +66,8 @@ const services: Service[] = [
   {
     title: "Neurotoxin Injection",
     description:
-      "Neurotoxin injections for wrinkle reduction and skin rejuvenation",
-    image: "/assets/aromatherapy.jpg",
+      "Smooth away fine lines and dynamic wrinkles for a refreshed, natural look. Subtle, refined, and always tailored to you.",
+    image: "/assets/injection.jpg",
     price: "$90",
     duration: "60 minutes",
     badge: "Popular",
@@ -77,8 +80,9 @@ const services: Service[] = [
   },
   {
     title: "IV Vitamin Therapy",
-    description: "IV vitamin therapy for overall health and wellness",
-    image: "/assets/hot-stone.jpg",
+    description:
+      "Revitalize from within with targeted infusions of essential vitamins and nutrients. Boost immunity, energy, hydration, and overall well-being—drip by drip.",
+    image: "/assets/ivtherapy.jpg",
     price: "$130",
     duration: "90 minutes",
     badge: "Specialty",
@@ -91,8 +95,9 @@ const services: Service[] = [
   },
   {
     title: "Hair Loss Treatment with PRP/PRF",
-    description: "Hair loss treatment with PRP/PRF for men and women",
-    image: "/assets/consultation.jpg",
+    description:
+      "Regrow confidence along with your hair. Our PRP/PRF therapy taps into your body’s own healing power to stimulate natural hair growth and scalp health.",
+    image: "/assets/hair-removal.jpg",
     price: "$60",
     duration: "45 minutes",
     badge: "Essential",
@@ -152,8 +157,9 @@ export default function Services() {
             Your wellness journey starts here
           </h1>
           <p className="text-xl text-neutral-600 leading-relaxed font-light">
-            No matter where you are in your wellness journey, we're here to help
-            you reach new heights of relaxation and rejuvenation.
+            Each experience is tailored with intention, using nature-inspired
+            ingredients, expert techniques, and a deep respect for your personal
+            journey.
           </p>
         </motion.div>
 
