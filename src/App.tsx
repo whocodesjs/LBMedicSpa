@@ -28,7 +28,6 @@ import CssBaseline from "@mui/material/CssBaseline";
 import { theme } from "./styles/theme";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
-import LoadingSpinner from "./components/LoadingSpinner";
 import HoldToEnter from "./components/HoldToEnter";
 
 // Lazy load pages
@@ -99,7 +98,6 @@ const router = createBrowserRouter(
           </Suspense>
         </Layout>
       ),
-      scrollBehavior: "auto", // Ensure scroll reset on navigation
     },
     {
       path: "/services",
@@ -110,7 +108,6 @@ const router = createBrowserRouter(
           </Suspense>
         </Layout>
       ),
-      scrollBehavior: "auto",
     },
     {
       path: "/book-appointment",
@@ -121,7 +118,6 @@ const router = createBrowserRouter(
           </Suspense>
         </Layout>
       ),
-      scrollBehavior: "auto",
     },
     {
       path: "/shop",
@@ -132,7 +128,6 @@ const router = createBrowserRouter(
           </Suspense>
         </Layout>
       ),
-      scrollBehavior: "auto",
     },
     {
       path: "/events",
@@ -143,7 +138,6 @@ const router = createBrowserRouter(
           </Suspense>
         </Layout>
       ),
-      scrollBehavior: "auto",
     },
     {
       path: "/blog",
@@ -154,7 +148,6 @@ const router = createBrowserRouter(
           </Suspense>
         </Layout>
       ),
-      scrollBehavior: "auto",
     },
     {
       path: "/reviews",
@@ -165,7 +158,6 @@ const router = createBrowserRouter(
           </Suspense>
         </Layout>
       ),
-      scrollBehavior: "auto",
     },
     {
       path: "/contact",
@@ -176,7 +168,6 @@ const router = createBrowserRouter(
           </Suspense>
         </Layout>
       ),
-      scrollBehavior: "auto",
     },
   ],
   {

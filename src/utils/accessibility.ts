@@ -8,9 +8,11 @@
 import React from "react";
 
 /**
- * Manages focus for modal dialogs
- * @param element - The modal element
- * @param shouldFocus - Whether to focus the element
+ * Manages focus trapping for modal dialogs or similar elements.
+ * Adds keyboard listener to trap focus when shouldFocus is true.
+ * The calling component is responsible for removing the listener when appropriate.
+ * @param element - The element to trap focus within.
+ * @param shouldFocus - Whether focus trapping should be active.
  */
 export const manageFocus = (
   element: HTMLElement | null,
@@ -18,46 +20,56 @@ export const manageFocus = (
 ): void => {
   if (!element) return;
 
-  if (shouldFocus) {
-    // Find all focusable elements
+  // Define the keydown handler function *outside* the condition
+  // so it can be potentially referenced for removal if needed, although
+  // the responsibility is shifted to the caller.
+  const handleTabKey = (e: KeyboardEvent) => {
     const focusableElements = element.querySelectorAll(
       'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
     );
+    if (focusableElements.length === 0) return;
 
-    // Store the first and last focusable elements
     const firstFocusableElement = focusableElements[0] as HTMLElement;
     const lastFocusableElement = focusableElements[
       focusableElements.length - 1
     ] as HTMLElement;
 
-    // Focus the first element
+    if (e.key === "Tab") {
+      if (e.shiftKey) {
+        if (document.activeElement === firstFocusableElement) {
+          e.preventDefault();
+          lastFocusableElement?.focus();
+        }
+      } else {
+        if (document.activeElement === lastFocusableElement) {
+          e.preventDefault();
+          firstFocusableElement?.focus();
+        }
+      }
+    }
+  };
+
+  if (shouldFocus) {
+    const focusableElements = element.querySelectorAll(
+      'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+    );
+    const firstFocusableElement = focusableElements[0] as HTMLElement;
+
+    // Focus the first element when focus management is activated
     firstFocusableElement?.focus();
 
     // Add event listener for tab key
-    const handleTabKey = (e: KeyboardEvent) => {
-      if (e.key === "Tab") {
-        if (e.shiftKey) {
-          // If shift + tab and on first element, move to last
-          if (document.activeElement === firstFocusableElement) {
-            e.preventDefault();
-            lastFocusableElement?.focus();
-          }
-        } else {
-          // If tab and on last element, move to first
-          if (document.activeElement === lastFocusableElement) {
-            e.preventDefault();
-            firstFocusableElement?.focus();
-          }
-        }
-      }
-    };
-
     element.addEventListener("keydown", handleTabKey);
+    // NOTE: The removal of this listener should be handled by the calling component's useEffect cleanup
 
-    // Cleanup
-    return () => {
-      element.removeEventListener("keydown", handleTabKey);
-    };
+    // Removed the attempt to return a cleanup function
+    // return () => {
+    //   element.removeEventListener("keydown", handleTabKey);
+    // };
+  } else {
+    // Optionally, you could remove the listener here if the element persists,
+    // but it's generally cleaner to handle in the calling component's effect cleanup.
+    // element.removeEventListener("keydown", handleTabKey);
   }
 };
 

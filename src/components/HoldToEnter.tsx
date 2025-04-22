@@ -25,7 +25,7 @@ const HoldToEnter = ({ onComplete }: HoldToEnterProps) => {
 
   // Effect to handle starting and stopping animations based on isHolding
   useEffect(() => {
-    let timeout: NodeJS.Timeout;
+    let timeout: ReturnType<typeof setTimeout>;
 
     if (isHolding) {
       controls.start({

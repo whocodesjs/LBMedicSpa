@@ -21,7 +21,7 @@ export const measurePerformance = <T>(
   const result = fn();
   const duration = performance.now() - start;
 
-  if (process.env.NODE_ENV === "development") {
+  if (import.meta.env.DEV) {
     console.log(`[Performance] ${name}: ${duration.toFixed(2)}ms`);
   }
 
@@ -74,7 +74,7 @@ export const debounce = <T extends (...args: any[]) => any>(
   fn: T,
   delay: number
 ): ((...args: Parameters<T>) => void) => {
-  let timeoutId: NodeJS.Timeout;
+  let timeoutId: ReturnType<typeof setTimeout>;
 
   return (...args: Parameters<T>) => {
     clearTimeout(timeoutId);
@@ -93,7 +93,7 @@ export const throttle = <T extends (...args: any[]) => any>(
   limit: number
 ): ((...args: Parameters<T>) => void) => {
   let inThrottle: boolean;
-  let lastFn: NodeJS.Timeout;
+  let lastFn: ReturnType<typeof setTimeout>;
   let lastTime: number;
 
   return (...args: Parameters<T>) => {
