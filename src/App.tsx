@@ -14,15 +14,22 @@
  * ```
  */
 
-import React, { Suspense, lazy } from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import React, { Suspense, lazy, useEffect, useState, useCallback } from "react";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  createBrowserRouter,
+  RouterProvider,
+  useLocation,
+} from "react-router-dom";
 import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import { theme } from "./styles/theme";
-
-// Layout components
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import LoadingSpinner from "./components/LoadingSpinner";
+import HoldToEnter from "./components/HoldToEnter";
 
 // Lazy load pages
 const Home = lazy(() => import("./pages/Home"));
@@ -35,10 +42,149 @@ const Reviews = lazy(() => import("./pages/Reviews"));
 const Contact = lazy(() => import("./pages/Contact"));
 
 // Loading component
-const LoadingFallback = () => (
+const LoadingFallback = React.memo(() => (
   <div className="flex items-center justify-center min-h-screen">
     <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary-500"></div>
   </div>
+));
+LoadingFallback.displayName = "LoadingFallback";
+
+// ScrollToTop component
+const ScrollToTop = React.memo(() => {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  }, [pathname]);
+
+  return null;
+});
+ScrollToTop.displayName = "ScrollToTop";
+
+// Layout component
+const Layout = React.memo(({ children }: { children: React.ReactNode }) => {
+  const [showHoldToEnter, setShowHoldToEnter] = useState(true);
+
+  const handleComplete = useCallback(() => {
+    setShowHoldToEnter(false);
+  }, []);
+
+  if (showHoldToEnter) {
+    return <HoldToEnter onComplete={handleComplete} />;
+  }
+
+  return (
+    <div className="flex flex-col min-h-screen">
+      <Navbar />
+      <ScrollToTop />
+      <main className="flex-grow">{children}</main>
+      <Footer />
+    </div>
+  );
+});
+Layout.displayName = "Layout";
+
+// Create routes with modern Data Router API
+const router = createBrowserRouter(
+  [
+    {
+      path: "/",
+      element: (
+        <Layout>
+          <Suspense fallback={<LoadingFallback />}>
+            <Home />
+          </Suspense>
+        </Layout>
+      ),
+      scrollBehavior: "auto", // Ensure scroll reset on navigation
+    },
+    {
+      path: "/services",
+      element: (
+        <Layout>
+          <Suspense fallback={<LoadingFallback />}>
+            <Services />
+          </Suspense>
+        </Layout>
+      ),
+      scrollBehavior: "auto",
+    },
+    {
+      path: "/book-appointment",
+      element: (
+        <Layout>
+          <Suspense fallback={<LoadingFallback />}>
+            <BookAppointment />
+          </Suspense>
+        </Layout>
+      ),
+      scrollBehavior: "auto",
+    },
+    {
+      path: "/shop",
+      element: (
+        <Layout>
+          <Suspense fallback={<LoadingFallback />}>
+            <Shop />
+          </Suspense>
+        </Layout>
+      ),
+      scrollBehavior: "auto",
+    },
+    {
+      path: "/events",
+      element: (
+        <Layout>
+          <Suspense fallback={<LoadingFallback />}>
+            <Events />
+          </Suspense>
+        </Layout>
+      ),
+      scrollBehavior: "auto",
+    },
+    {
+      path: "/blog",
+      element: (
+        <Layout>
+          <Suspense fallback={<LoadingFallback />}>
+            <Blog />
+          </Suspense>
+        </Layout>
+      ),
+      scrollBehavior: "auto",
+    },
+    {
+      path: "/reviews",
+      element: (
+        <Layout>
+          <Suspense fallback={<LoadingFallback />}>
+            <Reviews />
+          </Suspense>
+        </Layout>
+      ),
+      scrollBehavior: "auto",
+    },
+    {
+      path: "/contact",
+      element: (
+        <Layout>
+          <Suspense fallback={<LoadingFallback />}>
+            <Contact />
+          </Suspense>
+        </Layout>
+      ),
+      scrollBehavior: "auto",
+    },
+  ],
+  {
+    future: {
+      v7_startTransition: true,
+      v7_relativeSplatPath: true,
+    },
+  }
 );
 
 /**
@@ -50,26 +196,7 @@ const App: React.FC = () => {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Router>
-        <div className="flex flex-col min-h-screen">
-          <Navbar />
-          <main className="flex-grow">
-            <Suspense fallback={<LoadingFallback />}>
-              <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/services" element={<Services />} />
-                <Route path="/book-appointment" element={<BookAppointment />} />
-                <Route path="/shop" element={<Shop />} />
-                <Route path="/events" element={<Events />} />
-                <Route path="/blog" element={<Blog />} />
-                <Route path="/reviews" element={<Reviews />} />
-                <Route path="/contact" element={<Contact />} />
-              </Routes>
-            </Suspense>
-          </main>
-          <Footer />
-        </div>
-      </Router>
+      <RouterProvider router={router} />
     </ThemeProvider>
   );
 };

@@ -5,6 +5,8 @@
  * It includes functions for lazy loading, responsive images, and image optimization.
  */
 
+import React from "react";
+
 /**
  * Generates a responsive image srcset string
  * @param src - The base image source

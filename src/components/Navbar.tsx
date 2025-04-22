@@ -19,6 +19,7 @@ import React, { useState, useEffect, useCallback, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { XMarkIcon, Bars3Icon } from "@heroicons/react/24/outline";
+import LinkWrapper from "./LinkWrapper";
 
 /**
  * Interface for menu items
@@ -137,7 +138,7 @@ const submenuVariants = {
 };
 
 /**
- * Button hover animation variants
+ * Button hover animation variants (for menu button, close button, etc.)
  */
 const buttonHoverVariants = {
   initial: {
@@ -159,6 +160,28 @@ const buttonHoverVariants = {
       ...smoothTransition,
       duration: 0.1,
     },
+  },
+};
+
+/**
+ * Menu Item hover animation variants (for list items)
+ */
+const menuItemHoverVariants = {
+  initial: {
+    backgroundColor: "rgba(0, 0, 0, 0)",
+    scale: 1,
+    x: 0,
+  },
+  hover: {
+    backgroundColor: "rgba(0, 0, 0, 0.02)",
+    scale: 1.01,
+    x: 2,
+    transition: { duration: 0.15, ease: "linear" },
+  },
+  tap: {
+    backgroundColor: "rgba(0, 0, 0, 0.04)",
+    scale: 0.99,
+    transition: { duration: 0.1, ease: "linear" },
   },
 };
 
@@ -225,11 +248,6 @@ const closeButtonVariants = {
   },
 };
 
-/**
- * Navbar Component
- *
- * @returns {JSX.Element} The rendered Navbar component
- */
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -301,19 +319,19 @@ const Navbar: React.FC = () => {
         aria-label="Main navigation">
         <nav className="mx-auto max-w-[1280px] px-6 md:px-8 lg:px-10 py-4 md:py-5">
           <div className="flex items-center justify-between">
-            <Link
+            <LinkWrapper
               to="/"
               className="text-xl font-semibold tracking-tight text-neutral-900 hover:opacity-80 transition-all duration-300"
               aria-label="Home">
               MedicSpa
-            </Link>
+            </LinkWrapper>
             <div className="flex items-center gap-4 md:gap-5">
-              <Link
+              <LinkWrapper
                 to="/book-appointment"
                 className="hidden md:inline-flex items-center justify-center rounded-full bg-neutral-900 px-6 py-2.5 text-[17px] font-medium text-white hover:bg-neutral-800 active:bg-neutral-950 transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] shadow-sm"
                 aria-label="Book an appointment">
                 Book Appointment
-              </Link>
+              </LinkWrapper>
               <motion.button
                 onClick={() => setIsOpen(true)}
                 initial="initial"
@@ -369,7 +387,7 @@ const Navbar: React.FC = () => {
                   initial="initial"
                   whileHover="hover"
                   whileTap="tap"
-                  variants={buttonHoverVariants}
+                  variants={closeButtonVariants}
                   className="inline-flex items-center justify-center rounded-full p-2.5 text-neutral-500 transition-all duration-200"
                   aria-label="Close menu">
                   <motion.div
@@ -393,14 +411,15 @@ const Navbar: React.FC = () => {
                         role="none"
                         className="group w-full md:w-auto">
                         {item.subItems ? (
-                          <div className="flex flex-col items-center md:items-start">
-                            <motion.button
+                          <motion.div
+                            initial="initial"
+                            whileHover="hover"
+                            whileTap="tap"
+                            variants={menuItemHoverVariants}
+                            className="flex flex-col items-center md:items-start rounded-2xl">
+                            <button
                               onClick={() => toggleSubmenu(item.label)}
-                              initial="initial"
-                              whileHover="hover"
-                              whileTap="tap"
-                              variants={buttonHoverVariants}
-                              className="w-auto md:w-full text-center md:text-left text-[28px] md:text-[22px] font-medium text-neutral-900 rounded-2xl px-4 py-2.5 transition-colors duration-200 flex items-center justify-center md:justify-between"
+                              className="w-full text-center md:text-left text-[28px] md:text-[22px] font-medium text-neutral-900 px-4 py-2.5 transition-colors duration-200 flex items-center justify-center md:justify-between"
                               aria-expanded={activeSubmenu === item.label}
                               role="menuitem">
                               {item.label}
@@ -416,7 +435,7 @@ const Navbar: React.FC = () => {
                                 className="text-neutral-400 group-hover:text-neutral-600 ml-2 origin-center hidden md:inline-block">
                                 +
                               </motion.span>
-                            </motion.button>
+                            </button>
                             <AnimatePresence mode="wait">
                               {activeSubmenu === item.label && (
                                 <motion.ul
@@ -424,91 +443,64 @@ const Navbar: React.FC = () => {
                                   animate="open"
                                   exit="closed"
                                   variants={submenuVariants}
-                                  className="mt-6 md:mt-4 md:ml-4 space-y-6 md:space-y-4 w-full flex flex-col items-center md:items-start"
+                                  className="mt-6 md:mt-4 md:ml-4 space-y-1 w-full flex flex-col items-center md:items-start"
                                   style={{ willChange: "height, opacity" }}
                                   role="menu">
-                                  {item.subItems.map((subItem, subIndex) => (
-                                    <motion.li
+                                  {item.subItems.map((subItem) => (
+                                    <li
                                       key={subItem.label}
-                                      variants={menuItemVariants}
-                                      custom={subIndex * 0.03}
-                                      style={{
-                                        willChange: "transform, opacity",
-                                      }}
-                                      role="none"
-                                      className="w-auto md:w-full">
+                                      className="w-full md:w-auto"
+                                      role="none">
                                       <motion.div
                                         initial="initial"
                                         whileHover="hover"
                                         whileTap="tap"
-                                        variants={buttonHoverVariants}
-                                        className="rounded-xl">
-                                        <Link
+                                        variants={menuItemHoverVariants}
+                                        className="rounded-2xl">
+                                        <LinkWrapper
                                           to={subItem.path}
-                                          className="block text-[20px] md:text-[17px] text-neutral-600 hover:text-neutral-900 px-4 py-2.5 transition-colors duration-200 text-center md:text-left"
                                           onClick={closeMenu}
+                                          className="block w-full text-center md:text-left text-[22px] md:text-[18px] font-normal text-neutral-600 hover:text-neutral-900 px-4 py-2 transition-colors duration-200"
                                           role="menuitem">
                                           {subItem.label}
-                                        </Link>
+                                        </LinkWrapper>
                                       </motion.div>
-                                    </motion.li>
+                                    </li>
                                   ))}
                                 </motion.ul>
                               )}
                             </AnimatePresence>
-                          </div>
+                          </motion.div>
                         ) : (
                           <motion.div
                             initial="initial"
                             whileHover="hover"
                             whileTap="tap"
-                            variants={buttonHoverVariants}
-                            className="rounded-2xl flex justify-center md:justify-start">
-                            <Link
+                            variants={menuItemHoverVariants}
+                            className="rounded-2xl">
+                            <LinkWrapper
                               to={item.path}
-                              className="block text-[28px] md:text-[22px] font-medium text-neutral-900 px-4 py-2.5 transition-colors duration-200 text-center md:text-left"
                               onClick={closeMenu}
+                              className="block w-full text-center md:text-left text-[28px] md:text-[22px] font-medium text-neutral-900 hover:text-neutral-700 px-4 py-2.5 transition-colors duration-200"
                               role="menuitem">
                               {item.label}
-                            </Link>
+                            </LinkWrapper>
                           </motion.div>
                         )}
                       </motion.li>
                     ))}
                   </ul>
+                  <div className="flex items-center justify-center md:hidden py-6">
+                    <LinkWrapper
+                      to="/book-appointment"
+                      onClick={closeMenu}
+                      className="inline-flex items-center justify-center rounded-full bg-neutral-900 px-6 py-2.5 text-[17px] font-medium text-white"
+                      aria-label="Book an appointment">
+                      Book Appointment
+                    </LinkWrapper>
+                  </div>
                 </div>
               </nav>
-              <motion.div
-                variants={menuItemVariants}
-                className="px-6 py-8 md:absolute md:bottom-8 md:left-6 md:right-6 md:py-0 pb-safe"
-                style={{ willChange: "transform, opacity" }}>
-                <motion.div
-                  initial="initial"
-                  whileHover="hover"
-                  whileTap="tap"
-                  variants={{
-                    initial: { scale: 1, y: 0 },
-                    hover: {
-                      scale: 1.02,
-                      y: -1,
-                      transition: { ...smoothTransition, duration: 0.2 },
-                    },
-                    tap: {
-                      scale: 0.98,
-                      y: 1,
-                      transition: { ...smoothTransition, duration: 0.1 },
-                    },
-                  }}
-                  className="w-full">
-                  <Link
-                    to="/book-appointment"
-                    className="flex w-full items-center justify-center rounded-full bg-neutral-900 px-6 py-4 text-[20px] md:text-[17px] font-medium text-white hover:bg-neutral-800 active:bg-neutral-950 transition-all duration-200 shadow-sm"
-                    onClick={closeMenu}
-                    aria-label="Book an appointment">
-                    Book Appointment
-                  </Link>
-                </motion.div>
-              </motion.div>
             </motion.div>
           </>
         )}
@@ -517,4 +509,4 @@ const Navbar: React.FC = () => {
   );
 };
 
-export default Navbar;
+export default React.memo(Navbar);

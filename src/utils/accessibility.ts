@@ -5,6 +5,8 @@
  * It includes functions for managing focus, ARIA attributes, and keyboard navigation.
  */
 
+import React from "react";
+
 /**
  * Manages focus for modal dialogs
  * @param element - The modal element

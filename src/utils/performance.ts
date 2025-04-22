@@ -5,6 +5,8 @@
  * It includes functions for measuring performance metrics and optimizing components.
  */
 
+import React from "react";
+
 /**
  * Measures the performance of a function
  * @param fn - The function to measure

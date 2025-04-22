@@ -27,6 +27,7 @@ import {
   EnvelopeIcon,
 } from "@heroicons/react/24/outline";
 import { motion } from "framer-motion";
+import LinkWrapper from "./LinkWrapper";
 
 /**
  * Interface for social media links
@@ -155,11 +156,6 @@ const socialIconVariants = {
   },
 };
 
-/**
- * Footer Component
- *
- * @returns {JSX.Element} The rendered Footer component
- */
 const Footer: React.FC = () => {
   // Memoize the current year to prevent unnecessary re-renders
   const currentYear = useMemo(() => new Date().getFullYear(), []);
@@ -303,4 +299,4 @@ const Footer: React.FC = () => {
   );
 };
 
-export default Footer;
+export default React.memo(Footer);
