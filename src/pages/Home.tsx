@@ -241,200 +241,190 @@ const CountingNumber = ({
 
 export default function Home() {
   return (
-    <div className="bg-whitesmoke">
+    <div className="bg-whitesmoke relative">
       {/* Hero Section */}
+      <div className="fixed inset-0 -z-10">
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.8 }}
+          className="relative h-screen w-full">
+          <div className="absolute inset-0">
+            <img
+              src="/assets/hero_img.jpg"
+              alt="Professional medical spa treatment"
+              className="absolute inset-0 w-full h-full object-cover object-center"
+              style={{ objectPosition: "50% 30%" }}
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
+          </div>
+        </motion.div>
+      </div>
+
+      {/* Hero Content */}
       <div className="relative min-h-screen flex items-center">
-        <div className="absolute inset-0 bg-white z-0" />
-        <div className="relative z-10 mx-auto max-w-7xl px-6 py-32">
+        <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, type: "spring", stiffness: 100 }}
-            className="max-w-3xl">
-            <h1 className="text-[64px] font-medium leading-tight mb-8 tracking-tight">
-              LB Medica Spa & Wellness Centre
+            transition={{ delay: 0.3, duration: 0.8 }}
+            className="max-w-2xl">
+            <h1 className="text-5xl font-light tracking-tight text-white sm:text-7xl">
+              Elevate Your Natural Beauty
             </h1>
-            <p className="text-xl text-neutral-600 mb-12 max-w-2xl leading-relaxed">
-              At LB MedicSpa & Wellness Centre, we are dedicated to providing
-              personalized care that nurtures both your body and mind.
+            <p className="mt-8 text-lg leading-relaxed text-gray-100 font-light">
+              Experience the perfect blend of advanced medical expertise and
+              luxurious spa treatments.
             </p>
-            <div className="flex items-center gap-6">
+            <div className="mt-10 flex items-center gap-x-6">
               <Link
                 to="/book-appointment"
-                className="inline-flex items-center justify-center rounded-full bg-neutral-900 px-6 py-3 text-base font-medium text-white hover:bg-neutral-800 transition-all duration-300 hover:scale-105">
+                className="rounded-full bg-white/90 backdrop-blur-sm px-8 py-4 text-sm font-medium text-neutral-900 shadow-sm hover:bg-white transition-all">
                 Book Appointment
-                <ArrowRightIcon className="ml-2 h-5 w-5" />
               </Link>
-              <button className="inline-flex items-center justify-center gap-2 text-neutral-900 hover:text-neutral-600 transition-all duration-300 group">
-                <PlayIcon className="h-8 w-8 group-hover:scale-110 transition-transform duration-300" />
-                <span className="font-medium">Watch video</span>
-              </button>
+              <Link
+                to="/services"
+                className="text-sm font-medium leading-6 text-white flex items-center group">
+                Explore Services{" "}
+                <ArrowRightIcon className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+              </Link>
             </div>
           </motion.div>
         </div>
       </div>
 
-      {/* Services Section */}
-      <div className="py-32 bg-white">
-        <div className="mx-auto max-w-7xl px-6">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, type: "spring", stiffness: 100 }}
-            className="max-w-2xl mb-16">
-            <h2 className="text-3xl font-medium mb-6 tracking-tight">
-              Our Services
-            </h2>
-            <p className="text-xl text-neutral-600 leading-relaxed">
-              We offer expert treatments designed to help you look and feel your
-              best, with a focus on your overall wellness.
-            </p>
-          </motion.div>
+      {/* Main Content */}
+      <div className="relative bg-white">
+        {/* Featured Services */}
+        <div className="py-24">
+          <div className="mx-auto max-w-7xl px-6">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+              className="max-w-2xl mb-16">
+              <h2 className="text-3xl font-light mb-6">Featured Services</h2>
+            </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {services.map((service, index) => (
-              <motion.div
-                key={service.name}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{
-                  duration: 0.5,
-                  delay: index * 0.1,
-                  type: "spring",
-                  stiffness: 100,
-                }}
-                className="group relative p-8 rounded-2xl bg-white shadow-sm hover:shadow-md transition-all duration-300">
-                <div className="mb-6">
-                  <service.icon />
-                </div>
-                <h3 className="text-xl font-medium mb-3 tracking-tight">
-                  {service.name}
-                </h3>
-                <p className="text-neutral-600 mb-8 leading-relaxed">
-                  {service.description}
-                </p>
-                <Link
-                  to="/services"
-                  className="inline-flex items-center text-neutral-900 font-medium group-hover:text-neutral-600 transition-colors">
-                  Learn more
-                  <ArrowRightIcon className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-                </Link>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </div>
-      {/* About Section */}
-      <div className="py-32 bg-white">
-        <div className="mx-auto max-w-7xl px-6">
-          <h2 className="text-3xl font-medium mb-6 tracking-tight">
-            Our range of services combines advanced medical aesthetics with
-            holistic wellness approaches, ensuring you receive the highest
-            standard of care in a tranquil and supportive environment. Whether
-            you're seeking rejuvenation, relaxation, or a healthier lifestyle,
-            we are here to guide you on your journey to enhanced beauty and
-            well-being. Welcome to a new you—where science meets self-care.
-          </h2>
-        </div>
-      </div>
-      {/* Stats Section */}
-      <div className="py-32 bg-whitesmoke">
-        <div className="mx-auto max-w-7xl px-6">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {stats.map((stat, index) => (
-              <motion.div
-                key={stat.label}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{
-                  duration: 0.5,
-                  delay: index * 0.1,
-                  type: "spring",
-                  stiffness: 100,
-                }}
-                className="text-center">
-                <div className="text-[56px] font-medium text-neutral-900 mb-2 tracking-tight">
-                  <CountingNumber value={stat.value} suffix={stat.suffix} />
-                </div>
-                <div className="text-xl text-neutral-600">{stat.label}</div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      {/* Testimonials Section */}
-      <div className="py-32 bg-white">
-        <div className="mx-auto max-w-7xl px-6">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, type: "spring", stiffness: 100 }}
-            className="max-w-2xl mb-16">
-            <h2 className="text-3xl font-medium mb-6 tracking-tight">
-              Client Stories
-            </h2>
-            <p className="text-xl text-neutral-600 leading-relaxed">
-              Hear from our clients about their wellness journey with us
-            </p>
-          </motion.div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {testimonials.map((testimonial, index) => (
-              <motion.div
-                key={testimonial.author}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{
-                  duration: 0.5,
-                  delay: index * 0.1,
-                  type: "spring",
-                  stiffness: 100,
-                }}
-                className="p-8 rounded-2xl bg-white shadow-sm hover:shadow-md transition-all duration-300">
-                <p className="text-lg text-neutral-600 mb-8 leading-relaxed">
-                  {testimonial.content}
-                </p>
-                <div>
-                  <div className="font-medium text-neutral-900 tracking-tight">
-                    {testimonial.author}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {services.slice(0, 6).map((service, index) => (
+                <motion.div
+                  key={service.name}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  className="group relative p-6 rounded-xl hover:bg-neutral-50 transition-all duration-300">
+                  <div className="mb-4">
+                    <service.icon />
                   </div>
-                  <div className="text-neutral-600">{testimonial.role}</div>
-                </div>
-              </motion.div>
-            ))}
+                  <h3 className="text-lg font-medium mb-2">{service.name}</h3>
+                  <p className="text-neutral-600 text-sm mb-4">
+                    {service.description}
+                  </p>
+                  <Link
+                    to={`/services/${service.name
+                      .toLowerCase()
+                      .replace(/\s+/g, "-")}`}
+                    className="inline-flex items-center text-sm text-neutral-900 font-medium group-hover:text-neutral-600 transition-colors">
+                    Learn more
+                    <ArrowRightIcon className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                  </Link>
+                </motion.div>
+              ))}
+            </div>
           </div>
         </div>
-      </div>
 
-      {/* CTA Section */}
-      <div className="py-32 bg-whitesmoke">
-        <div className="mx-auto max-w-7xl px-6">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, type: "spring", stiffness: 100 }}
-            className="text-center">
-            <h2 className="text-[56px] font-medium mb-8 tracking-tight">
-              Because You Deserve to Feel Amazing—Every Day.
-            </h2>
-            <p className="text-xl text-neutral-600 max-w-2xl mx-auto mb-12 leading-relaxed">
-              Book your appointment and take the first step towards a healthier,
-              more balanced you.
-            </p>
-            <Link
-              to="/book-appointment"
-              className="inline-flex items-center justify-center rounded-full bg-neutral-900 px-8 py-4 text-base font-medium text-white hover:bg-neutral-800 transition-all duration-300 hover:scale-105">
-              Book Appointment
-              <ArrowRightIcon className="ml-2 h-5 w-5" />
-            </Link>
-          </motion.div>
+        {/* Stats & About Combined Section */}
+        <div className="py-24 bg-neutral-50">
+          <div className="mx-auto max-w-7xl px-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8 }}
+                className="space-y-16">
+                {stats.map((stat, index) => (
+                  <div
+                    key={stat.label}
+                    className="border-l-2 border-neutral-200 pl-8">
+                    <div className="text-4xl font-light mb-2">
+                      <CountingNumber value={stat.value} suffix={stat.suffix} />
+                    </div>
+                    <div className="text-neutral-600">{stat.label}</div>
+                  </div>
+                ))}
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, x: 20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8 }}
+                className="text-lg text-neutral-600 leading-relaxed">
+                <p className="mb-6">
+                  Our range of services combines advanced medical aesthetics
+                  with holistic wellness approaches, ensuring you receive the
+                  highest standard of care in a tranquil and supportive
+                  environment.
+                </p>
+                <p>
+                  Whether you're seeking rejuvenation, relaxation, or a
+                  healthier lifestyle, we are here to guide you on your journey
+                  to enhanced beauty and well-being.
+                </p>
+              </motion.div>
+            </div>
+          </div>
+        </div>
+
+        {/* Testimonials Section - Simplified */}
+        <div className="py-24 bg-white">
+          <div className="mx-auto max-w-7xl px-6">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+              className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {testimonials.map((testimonial, index) => (
+                <blockquote key={testimonial.author} className="relative">
+                  <p className="text-lg font-light text-neutral-600 mb-4">
+                    "{testimonial.content}"
+                  </p>
+                  <footer className="text-sm">
+                    <div className="font-medium">{testimonial.author}</div>
+                    <div className="text-neutral-500">{testimonial.role}</div>
+                  </footer>
+                </blockquote>
+              ))}
+            </motion.div>
+          </div>
+        </div>
+
+        {/* CTA Section - Minimalist */}
+        <div className="py-24 bg-neutral-900 text-white">
+          <div className="mx-auto max-w-7xl px-6">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+              className="max-w-2xl mx-auto text-center">
+              <h2 className="text-3xl font-light mb-8">
+                Begin Your Wellness Journey Today
+              </h2>
+              <Link
+                to="/book-appointment"
+                className="inline-flex items-center justify-center rounded-full bg-white px-8 py-4 text-sm font-medium text-neutral-900 hover:bg-neutral-100 transition-all">
+                Book Your Appointment
+                <ArrowRightIcon className="ml-2 h-4 w-4" />
+              </Link>
+            </motion.div>
+          </div>
         </div>
       </div>
     </div>

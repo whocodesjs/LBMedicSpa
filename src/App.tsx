@@ -1,3 +1,20 @@
+/**
+ * App Component
+ *
+ * The main application component that sets up:
+ * - Routing configuration
+ * - Theme provider
+ * - Global layout structure
+ * - Navigation and page components
+ *
+ * @component
+ * @example
+ * ```tsx
+ * <App />
+ * ```
+ */
+
+import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -17,7 +34,12 @@ import Blog from "./pages/Blog";
 import Reviews from "./pages/Reviews";
 import Contact from "./pages/Contact";
 
-function App() {
+/**
+ * App Component
+ *
+ * @returns {JSX.Element} The rendered App component
+ */
+const App: React.FC = () => {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -41,6 +63,6 @@ function App() {
       </Router>
     </ThemeProvider>
   );
-}
+};
 
 export default App;
