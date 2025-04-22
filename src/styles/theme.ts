@@ -3,43 +3,48 @@ import { createTheme } from "@mui/material/styles";
 export const theme = createTheme({
   palette: {
     primary: {
-      main: "#1976D2", // Deep blue
-      light: "#E3F2FD", // Light blue
-      dark: "#1565C0",
+      main: "#007AFF", // iOS blue
+      light: "#E4E9FF",
+      dark: "#0055B3",
     },
     secondary: {
-      main: "#FFD700", // Gold
+      main: "#FF9500", // iOS orange
       light: "#FFE44D",
-      dark: "#B2A300",
+      dark: "#B26A00",
     },
     background: {
       default: "#FFFFFF",
       paper: "#F5F5F5",
     },
     text: {
-      primary: "#333333",
-      secondary: "#666666",
+      primary: "#171717",
+      secondary: "#525252",
     },
   },
   typography: {
-    fontFamily: '"Open Sans", "Roboto", "Lato", sans-serif',
+    fontFamily: [
+      "-apple-system",
+      "BlinkMacSystemFont",
+      "system-ui",
+      "sans-serif",
+    ].join(","),
     h1: {
-      fontFamily: '"Montserrat", "Poppins", sans-serif',
       fontSize: "2.5rem",
       fontWeight: 700,
+      lineHeight: 1.2,
     },
     h2: {
-      fontFamily: '"Montserrat", "Poppins", sans-serif',
       fontSize: "2rem",
       fontWeight: 600,
+      lineHeight: 1.3,
     },
     h3: {
-      fontFamily: '"Montserrat", "Poppins", sans-serif',
       fontSize: "1.75rem",
       fontWeight: 600,
+      lineHeight: 1.3,
     },
     body1: {
-      fontSize: "16px",
+      fontSize: "1rem",
       lineHeight: 1.6,
     },
   },
@@ -47,18 +52,29 @@ export const theme = createTheme({
     MuiButton: {
       styleOverrides: {
         root: {
-          borderRadius: 8,
+          borderRadius: 12,
           textTransform: "none",
           fontWeight: 600,
           padding: "10px 24px",
+          transition: "all 0.2s ease-in-out",
         },
       },
     },
     MuiCard: {
       styleOverrides: {
         root: {
-          borderRadius: 12,
-          boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+          borderRadius: 16,
+          boxShadow: "0 4px 6px rgba(0, 0, 0, 0.05)",
+          transition: "all 0.2s ease-in-out",
+        },
+      },
+    },
+    MuiTextField: {
+      styleOverrides: {
+        root: {
+          "& .MuiOutlinedInput-root": {
+            borderRadius: 12,
+          },
         },
       },
     },

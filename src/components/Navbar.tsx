@@ -1,11 +1,12 @@
 /**
  * Navbar Component
  *
- * A responsive navigation bar component that includes:
- * - Mobile and desktop navigation
- * - Dropdown menus for sub-items
- * - Scroll-aware styling
- * - Smooth animations using Framer Motion
+ * A responsive navigation bar component that follows Apple's Human Interface Guidelines:
+ * - Depth and translucency effects
+ * - Smooth animations and transitions
+ * - Refined typography and spacing
+ * - Enhanced accessibility
+ * - Elegant mobile menu
  *
  * @component
  * @example
@@ -67,23 +68,159 @@ const menuItems: MenuItem[] = [
 ];
 
 /**
+ * Spring animation config for smooth, immediate transitions
+ */
+const springConfig = {
+  type: "spring",
+  stiffness: 400,
+  damping: 30,
+  mass: 0.5,
+  restDelta: 0.0001,
+};
+
+/**
+ * Smooth transition config
+ */
+const smoothTransition = {
+  type: "tween",
+  duration: 0.2,
+  ease: [0.32, 0.72, 0, 1],
+};
+
+/**
  * Animation variants for the mobile menu
  */
 const menuVariants = {
   closed: {
     x: "100%",
-    transition: {
-      type: "spring",
-      stiffness: 400,
-      damping: 40,
-    },
+    opacity: 0,
+    transition: springConfig,
   },
   open: {
     x: "0%",
+    opacity: 1,
+    transition: springConfig,
+  },
+};
+
+const menuItemVariants = {
+  closed: {
+    opacity: 0,
+    transition: smoothTransition,
+  },
+  open: {
+    opacity: 1,
+    transition: smoothTransition,
+  },
+};
+
+/**
+ * Submenu animation variants
+ */
+const submenuVariants = {
+  closed: {
+    height: 0,
+    opacity: 0,
+    transition: {
+      height: { ...smoothTransition },
+      opacity: { duration: 0.1, ease: "easeOut" },
+    },
+  },
+  open: {
+    height: "auto",
+    opacity: 1,
+    transition: {
+      height: { ...smoothTransition },
+      opacity: { duration: 0.1, ease: "easeIn" },
+    },
+  },
+};
+
+/**
+ * Button hover animation variants
+ */
+const buttonHoverVariants = {
+  initial: {
+    scale: 1,
+    backgroundColor: "rgba(255, 255, 255, 0)",
+    y: 0,
+  },
+  hover: {
+    scale: 1.02,
+    backgroundColor: "rgba(245, 245, 245, 0.95)",
+    y: -1,
+    transition: smoothTransition,
+  },
+  tap: {
+    scale: 0.98,
+    backgroundColor: "rgba(235, 235, 235, 1)",
+    y: 1,
+    transition: {
+      ...smoothTransition,
+      duration: 0.1,
+    },
+  },
+};
+
+/**
+ * Close icon animation variants
+ */
+const closeIconVariants = {
+  initial: {
+    rotate: 0,
+    scale: 1,
+  },
+  hover: {
+    rotate: 90,
+    scale: 1.1,
     transition: {
       type: "spring",
-      stiffness: 400,
-      damping: 40,
+      stiffness: 300,
+      damping: 20,
+    },
+  },
+  tap: {
+    scale: 0.95,
+    transition: {
+      type: "spring",
+      stiffness: 500,
+      damping: 25,
+    },
+  },
+};
+
+/**
+ * Close button animation variants
+ */
+const closeButtonVariants = {
+  initial: {
+    scale: 1,
+    rotate: 0,
+    backgroundColor: "rgba(255, 255, 255, 0)",
+  },
+  hover: {
+    scale: 1.1,
+    backgroundColor: "rgba(245, 245, 245, 0.95)",
+    transition: {
+      ...smoothTransition,
+      duration: 0.2,
+    },
+  },
+  tap: {
+    scale: 0.95,
+    backgroundColor: "rgba(235, 235, 235, 1)",
+    transition: {
+      ...smoothTransition,
+      duration: 0.1,
+    },
+  },
+  exit: {
+    scale: 0.9,
+    rotate: 90,
+    opacity: 0,
+    transition: {
+      ...smoothTransition,
+      duration: 0.2,
     },
   },
 };
@@ -147,8 +284,10 @@ const Navbar: React.FC = () => {
   // Memoize the navbar class to prevent unnecessary re-renders
   const navbarClass = useMemo(
     () =>
-      `fixed top-0 left-0 right-0 transition-all duration-300 ${
-        isScrolled ? "bg-white/80 backdrop-blur-md shadow-sm" : ""
+      `fixed top-0 left-0 right-0 transition-all duration-500 ${
+        isScrolled
+          ? "bg-white/80 backdrop-blur-xl shadow-[0_8px_32px_rgba(0,0,0,0.08)] supports-[backdrop-filter]:bg-white/60"
+          : "bg-transparent"
       }`,
     [isScrolled]
   );
@@ -160,31 +299,38 @@ const Navbar: React.FC = () => {
         style={{ zIndex: 1000 }}
         role="banner"
         aria-label="Main navigation">
-        <nav className="mx-auto max-w-7xl px-6 py-4">
+        <nav className="mx-auto max-w-[1280px] px-6 md:px-8 lg:px-10 py-4 md:py-5">
           <div className="flex items-center justify-between">
-            <Link to="/" className="text-xl font-medium" aria-label="Home">
+            <Link
+              to="/"
+              className="text-xl font-semibold tracking-tight text-neutral-900 hover:opacity-80 transition-all duration-300"
+              aria-label="Home">
               MedicSpa
             </Link>
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-4 md:gap-5">
               <Link
                 to="/book-appointment"
-                className="hidden md:inline-flex items-center justify-center rounded-full bg-neutral-900 px-5 py-2 text-sm font-medium text-white hover:bg-neutral-800 transition-all duration-300 hover:scale-105"
+                className="hidden md:inline-flex items-center justify-center rounded-full bg-neutral-900 px-6 py-2.5 text-[17px] font-medium text-white hover:bg-neutral-800 active:bg-neutral-950 transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] shadow-sm"
                 aria-label="Book an appointment">
                 Book Appointment
               </Link>
-              <button
+              <motion.button
                 onClick={() => setIsOpen(true)}
-                className="inline-flex items-center justify-center rounded-full border border-neutral-200 p-2 text-neutral-900 hover:bg-neutral-50 transition-all duration-300"
+                initial="initial"
+                whileHover="hover"
+                whileTap="tap"
+                variants={buttonHoverVariants}
+                className="inline-flex items-center justify-center rounded-full border border-neutral-200/80 p-2.5 text-neutral-900 transition-all duration-300"
                 aria-label="Open menu"
                 aria-expanded={isOpen}>
-                <Bars3Icon className="h-6 w-6" />
-              </button>
+                <Bars3Icon className="h-5 w-5" />
+              </motion.button>
             </div>
           </div>
         </nav>
       </header>
 
-      <AnimatePresence>
+      <AnimatePresence mode="wait">
         {isOpen && (
           <>
             <motion.div
@@ -192,112 +338,177 @@ const Navbar: React.FC = () => {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.2 }}
-              className="fixed inset-0 bg-black/20 backdrop-blur-sm"
+              className="fixed inset-0 bg-black/10 backdrop-blur-[4px] supports-[backdrop-filter]:bg-black/5 md:block hidden"
               style={{ zIndex: 1001 }}
               onClick={closeMenu}
               role="presentation"
             />
-
             <motion.div
               initial="closed"
               animate="open"
               exit="closed"
               variants={menuVariants}
-              className="fixed top-0 bottom-0 right-0 w-[50vw] bg-white/95 backdrop-blur-md overflow-hidden"
-              style={{ zIndex: 1002 }}
+              className="fixed top-0 right-0 bottom-0 w-full md:w-[420px] bg-white md:bg-white/95 backdrop-blur-xl shadow-2xl flex flex-col"
+              style={{
+                zIndex: 1002,
+                willChange: "transform",
+                height: "100dvh",
+              }}
               role="dialog"
               aria-modal="true"
-              aria-label="Mobile menu">
-              <div className="h-full flex flex-col">
-                <div className="flex items-center justify-end gap-4 p-4">
-                  <Link
-                    to="/book-appointment"
-                    onClick={closeMenu}
-                    className="group inline-flex items-center justify-center gap-2 rounded-full bg-neutral-900 px-5 py-2 text-sm font-medium text-white hover:bg-neutral-800 transition-all duration-300 hover:scale-105"
-                    aria-label="Book an appointment">
-                    <span>Book Appointment</span>
-                    <motion.svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      strokeWidth={2}
-                      stroke="currentColor"
-                      className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1"
-                      aria-hidden="true">
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75"
-                      />
-                    </motion.svg>
-                  </Link>
-                  <button
-                    onClick={closeMenu}
-                    className="group inline-flex items-center justify-center gap-2 rounded-full border border-neutral-200 px-5 py-2 text-sm font-medium text-neutral-900 hover:bg-neutral-50 transition-all duration-300"
-                    aria-label="Close menu">
-                    <XMarkIcon className="h-4 w-4 transition-transform duration-300 group-hover:rotate-90" />
-                    <span>Close</span>
-                  </button>
-                </div>
-                <div className="flex-1 px-8 py-6">
-                  <div className="space-y-6">
-                    {menuItems.map((item) => (
-                      <div
+              aria-label="Navigation menu">
+              <motion.div
+                variants={menuItemVariants}
+                className="flex items-center justify-between px-6 py-4 border-b border-neutral-100"
+                style={{ willChange: "transform, opacity" }}>
+                <span className="text-[28px] font-semibold tracking-tight">
+                  Menu
+                </span>
+                <motion.button
+                  onClick={closeMenu}
+                  initial="initial"
+                  whileHover="hover"
+                  whileTap="tap"
+                  variants={buttonHoverVariants}
+                  className="inline-flex items-center justify-center rounded-full p-2.5 text-neutral-500 transition-all duration-200"
+                  aria-label="Close menu">
+                  <motion.div
+                    variants={closeIconVariants}
+                    className="origin-center">
+                    <XMarkIcon className="h-6 w-6" />
+                  </motion.div>
+                </motion.button>
+              </motion.div>
+              <nav className="flex-1 px-6 overflow-y-auto overscroll-none md:block flex flex-col">
+                <div className="h-full flex flex-col md:block">
+                  <ul
+                    className="flex-1 flex flex-col justify-center md:block space-y-6 md:space-y-8 py-4 md:py-8"
+                    role="menu">
+                    {menuItems.map((item, index) => (
+                      <motion.li
                         key={item.label}
-                        className="border-b border-neutral-200/80 pb-6">
+                        variants={menuItemVariants}
+                        custom={index}
+                        style={{ willChange: "transform, opacity" }}
+                        role="none"
+                        className="group w-full md:w-auto">
                         {item.subItems ? (
-                          <>
-                            <button
+                          <div className="flex flex-col items-center md:items-start">
+                            <motion.button
                               onClick={() => toggleSubmenu(item.label)}
-                              className="flex w-full items-center justify-between text-2xl font-medium tracking-tight text-neutral-900 hover:text-neutral-600 transition-all duration-300"
-                              aria-expanded={activeSubmenu === item.label}>
+                              initial="initial"
+                              whileHover="hover"
+                              whileTap="tap"
+                              variants={buttonHoverVariants}
+                              className="w-auto md:w-full text-center md:text-left text-[28px] md:text-[22px] font-medium text-neutral-900 rounded-2xl px-4 py-2.5 transition-colors duration-200 flex items-center justify-center md:justify-between"
+                              aria-expanded={activeSubmenu === item.label}
+                              role="menuitem">
                               {item.label}
                               <motion.span
                                 animate={{
                                   rotate: activeSubmenu === item.label ? 45 : 0,
+                                  scale: activeSubmenu === item.label ? 1.1 : 1,
                                 }}
-                                transition={{ duration: 0.2 }}
-                                className="text-xl"
-                                aria-hidden="true">
+                                transition={{
+                                  ...smoothTransition,
+                                  duration: 0.2,
+                                }}
+                                className="text-neutral-400 group-hover:text-neutral-600 ml-2 origin-center hidden md:inline-block">
                                 +
                               </motion.span>
-                            </button>
-                            <AnimatePresence>
+                            </motion.button>
+                            <AnimatePresence mode="wait">
                               {activeSubmenu === item.label && (
-                                <motion.div
-                                  initial={{ height: 0, opacity: 0 }}
-                                  animate={{ height: "auto", opacity: 1 }}
-                                  exit={{ height: 0, opacity: 0 }}
-                                  transition={{ duration: 0.2 }}
-                                  className="overflow-hidden">
-                                  <div className="space-y-3 pt-4">
-                                    {item.subItems.map((subItem) => (
-                                      <Link
-                                        key={subItem.label}
-                                        to={subItem.path}
-                                        onClick={closeMenu}
-                                        className="block pl-4 text-base text-neutral-600 hover:text-neutral-900 transition-all duration-300">
-                                        {subItem.label}
-                                      </Link>
-                                    ))}
-                                  </div>
-                                </motion.div>
+                                <motion.ul
+                                  initial="closed"
+                                  animate="open"
+                                  exit="closed"
+                                  variants={submenuVariants}
+                                  className="mt-6 md:mt-4 md:ml-4 space-y-6 md:space-y-4 w-full flex flex-col items-center md:items-start"
+                                  style={{ willChange: "height, opacity" }}
+                                  role="menu">
+                                  {item.subItems.map((subItem, subIndex) => (
+                                    <motion.li
+                                      key={subItem.label}
+                                      variants={menuItemVariants}
+                                      custom={subIndex * 0.03}
+                                      style={{
+                                        willChange: "transform, opacity",
+                                      }}
+                                      role="none"
+                                      className="w-auto md:w-full">
+                                      <motion.div
+                                        initial="initial"
+                                        whileHover="hover"
+                                        whileTap="tap"
+                                        variants={buttonHoverVariants}
+                                        className="rounded-xl">
+                                        <Link
+                                          to={subItem.path}
+                                          className="block text-[20px] md:text-[17px] text-neutral-600 hover:text-neutral-900 px-4 py-2.5 transition-colors duration-200 text-center md:text-left"
+                                          onClick={closeMenu}
+                                          role="menuitem">
+                                          {subItem.label}
+                                        </Link>
+                                      </motion.div>
+                                    </motion.li>
+                                  ))}
+                                </motion.ul>
                               )}
                             </AnimatePresence>
-                          </>
+                          </div>
                         ) : (
-                          <Link
-                            to={item.path}
-                            onClick={closeMenu}
-                            className="block text-2xl font-medium tracking-tight text-neutral-900 hover:text-neutral-600 transition-all duration-300">
-                            {item.label}
-                          </Link>
+                          <motion.div
+                            initial="initial"
+                            whileHover="hover"
+                            whileTap="tap"
+                            variants={buttonHoverVariants}
+                            className="rounded-2xl flex justify-center md:justify-start">
+                            <Link
+                              to={item.path}
+                              className="block text-[28px] md:text-[22px] font-medium text-neutral-900 px-4 py-2.5 transition-colors duration-200 text-center md:text-left"
+                              onClick={closeMenu}
+                              role="menuitem">
+                              {item.label}
+                            </Link>
+                          </motion.div>
                         )}
-                      </div>
+                      </motion.li>
                     ))}
-                  </div>
+                  </ul>
                 </div>
-              </div>
+              </nav>
+              <motion.div
+                variants={menuItemVariants}
+                className="px-6 py-8 md:absolute md:bottom-8 md:left-6 md:right-6 md:py-0 pb-safe"
+                style={{ willChange: "transform, opacity" }}>
+                <motion.div
+                  initial="initial"
+                  whileHover="hover"
+                  whileTap="tap"
+                  variants={{
+                    initial: { scale: 1, y: 0 },
+                    hover: {
+                      scale: 1.02,
+                      y: -1,
+                      transition: { ...smoothTransition, duration: 0.2 },
+                    },
+                    tap: {
+                      scale: 0.98,
+                      y: 1,
+                      transition: { ...smoothTransition, duration: 0.1 },
+                    },
+                  }}
+                  className="w-full">
+                  <Link
+                    to="/book-appointment"
+                    className="flex w-full items-center justify-center rounded-full bg-neutral-900 px-6 py-4 text-[20px] md:text-[17px] font-medium text-white hover:bg-neutral-800 active:bg-neutral-950 transition-all duration-200 shadow-sm"
+                    onClick={closeMenu}
+                    aria-label="Book an appointment">
+                    Book Appointment
+                  </Link>
+                </motion.div>
+              </motion.div>
             </motion.div>
           </>
         )}
